@@ -18,7 +18,7 @@ import numpy
 from mi.core.log import get_logger
 log = get_logger()
 from mi.core.common import BaseEnum
-from mi.core.exceptions import SampleException
+from mi.core.exceptions import RecoverableSampleException
 from mi.core.instrument.data_particle import DataParticle
 from mi.dataset.parser.cspp_base import \
     CsppParser, \
@@ -166,7 +166,7 @@ class DostaAbcdjmCsppMetadataDataParticle(CsppMetadataDataParticle):
 
         except (ValueError, TypeError, IndexError) as ex:
             log.warn("Exception when building parsed values")
-            raise SampleException("Error (%s) while decoding parameters in data: [%s]"
+            raise RecoverableSampleException("Error (%s) while decoding parameters in data: [%s]"
                                   % (ex, self.raw_data))
 
         return results
@@ -222,7 +222,7 @@ class DostaAbcdjmCsppInstrumentDataParticle(DataParticle):
         # will ensure we catch any potential errors just in case
         except (ValueError, TypeError, IndexError) as ex:
             log.warn("Exception when building parsed values")
-            raise SampleException("Error (%s) while decoding parameters in data: [%s]"
+            raise RecoverableSampleException("Error (%s) while decoding parameters in data: [%s]"
                                   % (ex, self.raw_data))
 
         return results
